@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DbContactList extends StatefulWidget {
   var officeInfo;
@@ -13,6 +15,70 @@ class DbContactListState extends State<DbContactList> {
   var officeInfo;
 
   DbContactListState(this.officeInfo);
+
+  List ContactList = [];
+  List allContact = [
+    {
+      "Aditional Commissioner Office": [
+        {
+          "name": "",
+          "mobileno": 171956558,
+          "designation": "Commissioner"
+        },
+        {
+          "name": "",
+          "mobileno": 171956558,
+          "designation": "DG"
+        },
+        {
+          "name": "",
+          "mobileno": 171956558,
+          "designation": "Sub DG"
+        },
+        {
+          "name": "",
+          "mobileno": 171956558,
+          "designation": "Sub Inspector"
+        }
+      ]
+    },
+    {
+      "Joint Police Commissioner Office": [
+        {
+          "name": "",
+          "mobileno": 171956558,
+          "designation": "Commissioner"
+        },
+        {
+          "name": "",
+          "mobileno": 171956558,
+          "designation": "DG"
+        },
+        {
+          "name": "",
+          "mobileno": 171956558,
+          "designation": "Sub DG"
+        },
+        {
+          "name": "",
+          "mobileno": 171956558,
+          "designation": "Sub Inspector"
+        }
+      ]
+    }
+  ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+
+    });
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,22 +101,46 @@ class DbContactListState extends State<DbContactList> {
   }
 
   Widget _myListView2(BuildContext context) {
+
+    showToast(String txt) {
+      Fluttertoast.showToast(
+          msg: "${txt}",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.teal,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
     return ListView.separated(
-      itemCount: 50,
+      itemCount: ContactList != null ? ContactList.length : 0,
       itemBuilder: (context, i) {
-        return ListTile(
-          onTap: () => {
-            /*Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => DbContactList(dbzones[i])),
-            )*/
+        return ContactList != null ? GestureDetector(
+          onLongPress: ()=>{
+            showToast("text coppied"),
           },
-          title: Text(
-            'Db name',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+          child: Padding(padding: EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+
+                GestureDetector(
+                  child: new Text('Don\'t have an account?',
+                      style: new TextStyle(color: Color(0xFF2E3233))),
+                  onTap: () {},
+                ),
+                GestureDetector(
+                    onTap: () {},
+                    child: new Text(
+                      'Register.',
+                      style: new TextStyle(
+                          color: Color(0xFF84A2AF),
+                          fontWeight: FontWeight.bold),
+                    ))
+              ],
+            ),
           ),
-        );
+        ): CircularProgressIndicator();
       },
       separatorBuilder: (context, index) {
         return Divider();

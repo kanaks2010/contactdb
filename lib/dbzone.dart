@@ -8,13 +8,13 @@ class DbZone extends StatefulWidget {
 
 class DbZoneState extends State<DbZone> {
   final dbzones = [
-    {'name': ' Aditional Commissioner Office'},
-    {'name': ' Joint Police Commissioner Office'},
-    {'name': ' DC DB East'},
-    {'name': ' DC DB West'},
-    {'name': ' DC DB South'},
-    {'name': ' DC DB North'},
-    {'name': ' DC DB Serious Crime'},
+    {'id': 0, 'name': ' Aditional Commissioner Office'},
+    {'id': 1, 'name': ' Joint Police Commissioner Office'},
+    {'id': 2, 'name': ' DC DB East'},
+    {'id': 3, 'name': ' DC DB West'},
+    {'id': 4, 'name': ' DC DB South'},
+    {'id': 5, 'name': ' DC DB North'},
+    {'id': 6, 'name': ' DC DB Serious Crime'},
   ];
 
   @override
