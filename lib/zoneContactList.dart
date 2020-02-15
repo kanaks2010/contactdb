@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 
 class DbContactList extends StatefulWidget {
   var officeInfo;
@@ -77,7 +78,16 @@ class DbContactListState extends State<DbContactList> {
     });
   }
 
-
+  showToast(String txt) {
+    Fluttertoast.showToast(
+        msg: "${txt}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIos: 1,
+        backgroundColor: Colors.teal,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
 
 
   @override
@@ -96,55 +106,84 @@ class DbContactListState extends State<DbContactList> {
             ),
             centerTitle: true,
           )),
-      body: _myListView2(context),
+      body: _myListView3(context),
     );
   }
 
-  Widget _myListView2(BuildContext context) {
-
-    showToast(String txt) {
-      Fluttertoast.showToast(
-          msg: "${txt}",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIos: 1,
-          backgroundColor: Colors.teal,
-          textColor: Colors.white,
-          fontSize: 16.0);
-    }
-    return ListView.separated(
-      itemCount: ContactList != null ? ContactList.length : 0,
-      itemBuilder: (context, i) {
-        return ContactList != null ? GestureDetector(
-          onLongPress: ()=>{
-            showToast("text coppied"),
-          },
-          child: Padding(padding: EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-
-                GestureDetector(
-                  child: new Text('Don\'t have an account?',
-                      style: new TextStyle(color: Color(0xFF2E3233))),
-                  onTap: () {},
-                ),
-                GestureDetector(
-                    onTap: () {},
-                    child: new Text(
-                      'Register.',
-                      style: new TextStyle(
-                          color: Color(0xFF84A2AF),
-                          fontWeight: FontWeight.bold),
-                    ))
-              ],
+  Widget _myListView3(BuildContext context) {
+    ScrollController _arrowsController = ScrollController();
+    return Scaffold(
+      body: Center(
+        child: Container(
+          child: DraggableScrollbar.arrows(
+            // labelTextBuilder: (double offset) => Text("${i}"),
+            controller: _arrowsController,
+            scrollbarAnimationDuration: Duration(seconds: 1),
+            scrollbarTimeToFade: Duration(seconds: 1),
+            backgroundColor: Colors.teal,
+            child: ListView.builder(
+              controller: _arrowsController,
+              itemBuilder: (context, i) {
+                return GestureDetector(
+                    onLongPress: () {
+                      showToast("text coppied");
+                    },
+                    onTapUp: (val) {
+                      setState(() {
+                        // _selectedIndex = null;
+                      });
+                    },
+                    child: Card(
+                      child: Container(
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text("sdsdsd"),
+                                        Text("sdsd"),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 0),
+                                        child: Text("asasa"),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 0),
+                                        child: Image.asset(''),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                height: 2.0,
+                                color: Colors.teal,
+                              )
+                            ],
+                          )),
+                    ));
+              },
+              itemCount: 90,
             ),
           ),
-        ): CircularProgressIndicator();
-      },
-      separatorBuilder: (context, index) {
-        return Divider();
-      },
+        ),
+      ),
     );
   }
 }
